@@ -1,4 +1,4 @@
-package com.example.demoNaz.entity;
+package com.mukit09.RedisLearning.entity;
 
 import lombok.Getter;
 import lombok.Setter;

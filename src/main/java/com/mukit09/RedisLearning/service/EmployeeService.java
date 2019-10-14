@@ -1,7 +1,7 @@
-package com.example.demoNaz.service;
+package com.mukit09.RedisLearning.service;
 
-import com.example.demoNaz.entity.Employee;
-import com.example.demoNaz.repository.EmployeeRepository;
+import com.mukit09.RedisLearning.entity.Employee;
+import com.mukit09.RedisLearning.repository.EmployeeRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
@@ -20,5 +20,11 @@ public class EmployeeService {
     public List<Employee> getEmployeesByClient(String client) {
         log.debug("Inside of getEmployeeByClient");
         return repository.findEmployeesByClient(client);
+    }
+
+    @Cacheable(value = "employeeCache")
+    public List<Employee> getAllEmployees() {
+        log.debug("Inside of getAllEmployees");
+        return repository.findAll();
     }
 }

@@ -1,6 +1,6 @@
-package com.example.demoNaz.repository;
+package com.mukit09.RedisLearning.repository;
 
-import com.example.demoNaz.entity.Employee;
+import com.mukit09.RedisLearning.entity.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

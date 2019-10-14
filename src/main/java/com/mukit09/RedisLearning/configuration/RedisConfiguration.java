@@ -1,5 +1,6 @@
-package com.example.demoNaz.configuration;
+package com.mukit09.RedisLearning.configuration;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
@@ -10,35 +11,38 @@ import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisPassword;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
-import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 
 import java.time.Duration;
 
 @Configuration
 @EnableCaching
 @PropertySource("classpath:application.properties")
+@Slf4j
 public class RedisConfiguration {
     @Autowired
-    private Environment env;
+    private Environment environment;
 
     @Bean
-    public LettuceConnectionFactory redisConnectionFactory() {
-        RedisStandaloneConfiguration redisConf = new RedisStandaloneConfiguration();
-        redisConf.setHostName(env.getProperty("spring.redis.host"));
-        redisConf.setPort(Integer.parseInt(env.getProperty("spring.redis.port")));
-        redisConf.setPassword(RedisPassword.of(env.getProperty("spring.redis.password")));
-        return new LettuceConnectionFactory(redisConf);
+    public JedisConnectionFactory jedisConnectionFactory() {
+        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
+        redisStandaloneConfiguration.setHostName(environment.getProperty("spring.redis.host"));
+        redisStandaloneConfiguration.setPort(Integer.parseInt(environment.getProperty("spring.redis.port")));
+        redisStandaloneConfiguration.setPassword(RedisPassword.of(environment.getProperty("spring.redis.password")));
+        return new JedisConnectionFactory(redisStandaloneConfiguration);
     }
+
     @Bean
     public RedisCacheConfiguration cacheConfiguration() {
         RedisCacheConfiguration cacheConfig = RedisCacheConfiguration.defaultCacheConfig()
-                .entryTtl(Duration.ofSeconds(600))
+                .entryTtl(Duration.ofSeconds(10))
                 .disableCachingNullValues();
         return cacheConfig;
     }
+
     @Bean
     public RedisCacheManager cacheManager() {
-        RedisCacheManager rcm = RedisCacheManager.builder(redisConnectionFactory())
+        RedisCacheManager rcm = RedisCacheManager.builder(jedisConnectionFactory())
                 .cacheDefaults(cacheConfiguration())
                 .transactionAware()
                 .build();

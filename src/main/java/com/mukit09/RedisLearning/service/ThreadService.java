@@ -1,6 +1,6 @@
-package com.example.demoNaz.service;
+package com.mukit09.RedisLearning.service;
 
-import com.example.demoNaz.entity.Employee;
+import com.mukit09.RedisLearning.entity.Employee;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,13 +23,13 @@ public class ThreadService implements Runnable {
         log.debug("Service Thread Started");
         while(isRunning) {
             log.debug("First line of thread");
-//            List<Employee> employeeList = repository.findAll();
-//            for(Employee employee : employeeList) {
-//                log.debug(employee.getAcc() + "|" + employee.getClient() + "|" + employee.getId());
-//            }
+            List<Employee> employeeList = employeeService.getAllEmployees();
+            for(Employee employee : employeeList) {
+                log.debug(employee.getAcc() + "|" + employee.getClient() + "|" + employee.getId());
+            }
 
-            List<Employee> employees = employeeService.getEmployeesByClient("FastVoiz");
-            log.debug("Employee Size: " + employees.size());
+        //    List<Employee> employeeList = employeeService.getEmployeesByClient("FastVoiz");
+            log.debug("Employee Size: " + employeeList.size());
             try {
                 Thread.sleep(5000);
             } catch (InterruptedException e) {
