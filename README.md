@@ -61,6 +61,15 @@ As you are using jedis, need to exclude default redis client from redis dependen
 		</exclusions>
 </dependency>
 ```
+### Creating JAR
+
+Go to work directory. Type:
+
+> mvn package
+
+then redis.jar will be created in target directory. Run this jar with below command:
+
+> java -jar target/redis.jar
 
 [1]: https://www.postgresql.org/download/
 [2]: https://redis.io/download
