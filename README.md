@@ -63,7 +63,7 @@ As you are using jedis, need to exclude default redis client from redis dependen
 ```
 ### Creating JAR
 
-Go to work directory. Type:
+Go to work directory. Type in terminal:
 
 > mvn package
 
